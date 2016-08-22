@@ -180,6 +180,16 @@ public class MainActivity extends Activity {
             return SystemInfoUtils.getInstance(MainActivity.this).getVersionName();
         }
 
+
+        /**
+         * 查询当前的版本号
+         */
+        @JavascriptInterface
+        public int getNowVersion() {
+            return SystemInfoUtils.getInstance(MainActivity.this).getVersionCode();
+        }
+
+
         /**
          * 设置屏幕横屏竖屏 0 默认  1横屏 2 竖屏
          *

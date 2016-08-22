@@ -224,7 +224,7 @@ public class SystemInfoUtils {
             int key = appInfo.metaData.getInt("qd_code");
             qudao = key+"";
             return qudao;
-        } catch (PackageManager.NameNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return "2622";
