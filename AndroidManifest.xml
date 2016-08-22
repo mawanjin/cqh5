@@ -21,6 +21,6 @@
             </intent-filter>
         </activity>
 
-        <meta-data android:name="qd_code" android:value="4740"/>
+        <!--<meta-data android:name="qd_code" android:value="4740"/>-->
     </application>
 </manifest>
