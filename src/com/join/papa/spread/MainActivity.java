@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
                     Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
                     exitTime = System.currentTimeMillis();
                 } else {
-                    finish();
+                    System.exit(0);
                 }
                 return true;
             }
@@ -64,7 +64,6 @@ public class MainActivity extends Activity {
     }
 
 
-
     private void initWebView() {
         mWebView.getSettings().setDomStorageEnabled(true);
         mWebView.getSettings().setJavaScriptEnabled(true);
@@ -72,11 +71,12 @@ public class MainActivity extends Activity {
         mWebView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
         mWebView.getSettings().setAppCacheEnabled(true);
         mWebView.getSettings().setAllowFileAccess(true);
-        mWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         mWebView.getSettings().setAppCacheMaxSize(1024 * 1024 * 8);
         mWebView.getSettings().setPluginState(WebSettings.PluginState.ON);
         mWebView.getSettings().setBlockNetworkImage(false);
-        mWebView.getSettings().setLoadWithOverviewMode(false);
+        mWebView.getSettings().setLoadWithOverviewMode(true);
+        mWebView.getSettings().setDomStorageEnabled(true);
         mWebView.setWebViewClient(new WebViewClientXY(this));
         mWebView.setWebChromeClient(new WebChromeClient() {
             @Override
@@ -215,6 +215,43 @@ public class MainActivity extends Activity {
 
                 }
             });
+        }
+
+        @JavascriptInterface
+        public String getAccountVer2() {
+            String result="";
+
+            result = PrefUtil.getInstance(MainActivity.this).getAccountVer2();
+            if (null==result||"".equals(result)) {
+
+                result = "{" +
+                        "  \"hasLogin\": false" +
+                        "}";
+            }
+
+            return result;
+
+        }
+
+        @JavascriptInterface
+        public void setAccountVer2(String uid,String token) {
+            String s="{" +
+                    "  \"hasLogin\": true," +
+                    "  \"accountBean\": {" +
+                    "    \"uid\": "+uid+"," +
+                    "    \"account\": \"11\"," +
+                    "    \"nickname\": \"nick\"," +
+                    "    \"papaMoney\": 0," +
+                    "    \"registerTime\": 0," +
+                    "    \"avatarSrc\": \"ss\"," +
+                    "    \"gender\": 0," +
+                    "    \"token\": \""+token+"\"," +
+                    "    \"status\": false" +
+                    "  }" +
+                    "}";
+
+            PrefUtil.getInstance(MainActivity.this).setAccountVer2(s);
+
         }
 
     }

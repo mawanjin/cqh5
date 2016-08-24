@@ -221,7 +221,7 @@ public class SystemInfoUtils {
             appInfo = context.getPackageManager()
                     .getApplicationInfo(context.getPackageName(),
                             PackageManager.GET_META_DATA);
-            int key = appInfo.metaData.getInt("qd_code");
+            int key = appInfo.metaData.getInt("PA_AD_ID");
             qudao = key+"";
             return qudao;
         } catch (Exception e) {
