@@ -15,6 +15,9 @@ import android.view.View;
 import android.webkit.*;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebViewClient;
 
 public class MainActivity extends Activity {
     private  static String TAG = "MainActivity";
@@ -78,19 +81,7 @@ public class MainActivity extends Activity {
         mWebView.getSettings().setLoadWithOverviewMode(true);
         mWebView.getSettings().setDomStorageEnabled(true);
         mWebView.setWebViewClient(new WebViewClientXY(this));
-        mWebView.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
-                if (consoleMessage.message().contains("Uncaught ReferenceError") && consoleMessage.message().contains("papaBackPageUp")) {
-                    // do something...
-                    Log.v("infoo", "xxxxxxxxxxxxxxxx   " + consoleMessage.message());
-                }
-                Log.d("LjWebView", consoleMessage.message() + " -- From line "
-                        + consoleMessage.lineNumber() + " of "
-                        + consoleMessage.sourceId());
-                return super.onConsoleMessage(consoleMessage);
-            }
-        });
+
     }
 
 
