@@ -62,7 +62,7 @@ public class MainActivity extends Activity {
         });
 
         initWebView();
-        url = "http://sdtuis.papa91.com/h5/index/"+SystemInfoUtils.getInstance(this).getAd(this);
+        url = "http://sdtuis.papa91.com/h5/index20161011/"+SystemInfoUtils.getInstance(this).getAd(this);
         lodeWebView(url);
     }
 
@@ -255,26 +255,16 @@ public class MainActivity extends Activity {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url2) {
-            Log.d(TAG, "shouldOverrideUrlLoading() called.");
+
             if (NetWorkUtils.isNetworkConnected(MainActivity.this)) {
-                if (url2.startsWith("http") || url2.startsWith("https") || url2.startsWith("file://")) {
-                    view.loadUrl(url2);// 当打开新链接时，使用当前的 WebView，不会使用系统其他浏览器
-                    url = url2;
-                } else if (url.startsWith("weixin://wap/pay?")) {
-                    try {
-                        Intent intent = new Intent();
-                        intent.setAction(Intent.ACTION_VIEW);
-                        intent.setData(Uri.parse(url));
-                        MainActivity.this.startActivity(intent);
-                    } catch (Exception e) {
-
+                if (!url2.startsWith("weixin:")) {
+                    if (url2.startsWith("http") || url2.startsWith("https") || url2.startsWith("file://")) {
+                        url = url2;
                     }
-
-                    return true;
-                } else {
+                    return super.shouldOverrideUrlLoading(view,url2);
+                }else {
                     try {
-                        Intent in = new Intent(Intent.ACTION_VIEW, Uri.parse(url2));
-                        startActivity(in);
+                        startActivity(new Intent("android.intent.action.VIEW",Uri.parse(url2)));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -283,6 +273,7 @@ public class MainActivity extends Activity {
                 ToastUtils.getInstance(MainActivity.this).showToastSystem("网络连接异常，请检查网络连接");
             }
             return true;
+
         }
 
         @Override
